@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: header">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1><a href="/product">List Product</a></h1>
+    <h2 th:if="${message} != null" th:text="${message}"></h2>
+    <div class="container--btn" style="display:flex; justify-content: space-between;">
+        <div class="row" style="margin-left:0px">
+            <div class="btn btn-primary" ><a th:href="@{/product/create}">Create new product</a></div>
+        </div>
+        <div class="row" style="margin-left:0px">
+            <div class="btn btn-primary" ><a th:href="@{/product/findMaxPrice}">Show max price</a></div>
+        </div>
+        <div class="row" style="margin-left:0px">
+            <div class="btn btn-primary" ><a th:href="@{/product/findMinPrice}">Show min price</a></div>
+        </div>
+        <div class="row" style="margin-left:0px">
+            <div class="btn btn-primary" ><a th:href="@{/product/findMaxQuantity}">Show max quantity</a></div>
+        </div>
+        <div class="row" style="margin-left:0px">
+            <div class="btn btn-primary" ><a th:href="@{/product/findMinQuantity}">Show min quantity</a></div>
+        </div>
+        <div id="search" >
+            <form action="/product/page" >
+                <label><input type="text" name="search_page" th:value="${search_page}"></label>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+<table class="table table-striped" style="margin-top: 30px;
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;">
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th id="action" colspan="3">Action</th>
+    </tr>
+    <tr th:each="p, status : ${products}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${p.getName()}"></td>
+        <td th:text="${p.getQuantity()}"></td>
+        <td th:text="${p.getPrice()}"></td>
+        <td><img width="200px" height="200px" th:src="@{'../image/' + ${p.getImageUrl()}}" alt=""/></td>
+        <td>
+            <button class="btn btn-warning">
+                <a th:href="@{/product/update/{id}(id=${p.getId()})}">Update</a>
+            </button>
+        </td>
+        <td>
+            <button class="btn btn-danger">
+                <a th:href="@{/product/delete/{id}(id=${p.getId()})}">Delete</a>
+            </button>
+        </td>
+        <td>
+            <button class="btn btn-info">
+                <a th:href="@{/product/{id}(id=${p.getId()})}">Detail</a>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="8">
+            <button>
+                <a style="color: black" th:href="@{'/product/page'(page=${products.number - 1},search=${search_page})}" th:if="${products.hasPrevious()}">Previous</a>
+            </button>
+            <span style="color: black" th:text="${products.number + 1}"></span>/<span style="color: black" th:text="${products.totalPages}"></span>
+            <button>
+                <a style="color: black" th:href="@{'/product/page'(page=${products.number + 1},search=${search_page})}" th:if="${products.hasNext()}">Next</a>
+            </button>
+        </td>
+    </tr>
+</table>
+<!--<div>-->
+<!--&lt;!&ndash;    <button th:if="${products.hasPrevious()}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <a th:href="@{/product(page=${products.number - 1},id=${#ids})}">Previous</a>&ndash;&gt;-->
+<!--&lt;!&ndash;    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <span th:text="${products.number + 1}"></span>/&ndash;&gt;-->
+<!--&lt;!&ndash;    <span th:text="${products.totalPages}"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button th:if="${products.hasNext()}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <a th:href="@{/product(page=${products.number + 1},id=${#ids})}">Next</a>&ndash;&gt;-->
+<!--&lt;!&ndash;    </button>&ndash;&gt;-->
+<!--</div>-->
+</body>
+</html>

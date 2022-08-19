@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1>Create new Product</h1>
+    <h2 th:if="${message} != null" th:text="${message}"></h2>
+    <form method="post" th:object="${product}" enctype="multipart/form-data" th:action="@{/product/create}">
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <td><label><input type="text" th:field="*{name}"></label></td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td><label><input type="text" th:field="*{quantity}"></label></td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td><label><input type="text" th:field="*{price}"></label></td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><label><input type="file" th:field="*{image}" ></label></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-primary" type="submit"><span>Create</span></button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <button class="btn btn-primary"><a href="/province">Back to home</a></button>
+</div>
+</body>
+</html>

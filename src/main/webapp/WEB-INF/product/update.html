@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1>Update Product</h1>
+    <h2 th:if="${messageEdit} != null" th:text="${messageEdit}"></h2>
+    <form method="post" th:object="${product}" enctype="multipart/form-data">
+        <table class="table table-striped">
+            <tr>
+                <td>Name</td>
+                <td><label><input type="text" th:field="*{name}"></label></td>
+            </tr>
+            <tr>
+                <td>Quantity</td>
+                <td><label><input type="text" th:field="*{quantity}"></label></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td><label><input type="text" th:field="*{price}"></label></td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>
+                    <label><input type="file" th:field="*{image}"></label>
+                    <img width="100px" height="100px" th:src="@{'../image/' + ${product.getImageUrl()}}" alt=""/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-warning" type="submit"><span>Update</span></button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <button class="btn btn-primary"><a href="/product">Back to home</a></button>
+</div>
+</body>
+</html>
